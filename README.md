@@ -8,7 +8,7 @@
 
 ### Sobre o Projeto:
 
-Chat desenvolvido para a disciplina de Programação em ambientes de Redes. Integrantes: [@Maykon](https://github.com/maykon-oliveira/), Leandro, [@Habys](https://github.com/Habys10), [@Cris](https://github.com/cristianesa).
+Chat desenvolvido para a disciplina de Programação em ambientes de Redes. Integrantes: [@Maykon](https://github.com/maykon-oliveira/), [@Leandro](), [@Habys](https://github.com/Habys10), [@Cris](https://github.com/cristianesa).
 
 ## Descrição do Projeto:
 
