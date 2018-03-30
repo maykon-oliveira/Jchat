@@ -1,5 +1,7 @@
 package ifrn.edu.jchat;
 
+import ifrn.edu.jchat.cliente.Cliente;
+import java.io.IOException;
 import java.net.URL;
 import java.util.ResourceBundle;
 import javafx.event.ActionEvent;
@@ -13,18 +15,21 @@ import javafx.scene.control.Label;
  */
 public class tela_principalController implements Initializable {
     
-    @FXML
-    private Label label;
+    @FXML private Label label;
+    private Cliente cliente = new Cliente(this, "Maykon");
     
     @FXML
     private void handleButtonAction(ActionEvent event) {
-        System.out.println("You clicked me!");
-        label.setText("Hello World!");
+//        try {
+//            cliente.enviarMensagem("Teste");
+//        } catch (IOException ex) {
+//            ex.printStackTrace();
+//        }
     }
     
     @Override
     public void initialize(URL url, ResourceBundle rb) {
-        // TODO
+        new Thread(cliente).start();
     }    
     
 }

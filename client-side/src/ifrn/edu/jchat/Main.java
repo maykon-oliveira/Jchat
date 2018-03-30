@@ -17,7 +17,7 @@ public class Main extends Application {
         Parent root = FXMLLoader.load(getClass().getResource("tela_principal.fxml"));
         
         Scene scene = new Scene(root);
-        
+        stage.setTitle("JChat");
         stage.setScene(scene);
         stage.show();
     }
