@@ -7,17 +7,17 @@ import java.io.Serializable;
  * @author Maykon Oliveira
  */
 public class Mensagem implements Serializable {
-    private String remetenteNickname;
+    private String remetente;
     private String mensagem;
 
-    public Mensagem(String remetenteNickname, String mensagem) {
-        this.remetenteNickname = remetenteNickname;
+    public Mensagem(String remetente, String mensagem) {
+        this.remetente = remetente;
         this.mensagem = mensagem;
     }
 
     @Override
     public String toString() {
-        return remetenteNickname+": "+mensagem;
+        return remetente+": "+mensagem;
     }
 
     public String getMensagem() {
@@ -28,11 +28,11 @@ public class Mensagem implements Serializable {
         this.mensagem = mensagem;
     }
 
-    public String getRemetenteNickname() {
-        return remetenteNickname;
+    public String getRemetente() {
+        return remetente;
     }
 
-    public void setRemetenteNickname(String remetenteNickname) {
-        this.remetenteNickname = remetenteNickname;
+    public void setRemetente(String remetente) {
+        this.remetente = remetente;
     }
 }

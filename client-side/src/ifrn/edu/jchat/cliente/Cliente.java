@@ -1,11 +1,12 @@
 package ifrn.edu.jchat.cliente;
 
 import ifrn.edu.jchat.models.Mensagem;
-import ifrn.edu.jchat.tela_principalController;
+import ifrn.edu.jchat.TelaPrincipalController;
 import java.io.IOException;
 import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
 import java.net.Socket;
+import java.util.logging.Logger;
 
 /**
  *
@@ -13,35 +14,44 @@ import java.net.Socket;
  */
 public class Cliente implements Runnable {
     private final Integer PORTA = 5000;
-    private final String IP_SERVIDOR = "localhost";
-    private final tela_principalController TELA_PRINCIPAL;
-    private final String NICKNAME;
+    private final String SERVER_ADDRESS;
+    private final TelaPrincipalController TELA_PRINCIPAL;
     private ObjectOutputStream saidaDoCliente;
 
-    public Cliente(tela_principalController TELA_PRINCIPAL, String NICKNAME) {
+    public Cliente(TelaPrincipalController TELA_PRINCIPAL, String SERVER_ADDRESS) {
         this.TELA_PRINCIPAL = TELA_PRINCIPAL;
-        this.NICKNAME = NICKNAME;
+        this.SERVER_ADDRESS = SERVER_ADDRESS;
     }
     
     @Override
     public void run() {
         try {
-            Socket socketParaServidor = new Socket(IP_SERVIDOR, PORTA);
-            System.out.println("O cliente se conectou ao servidor!");
-            
-            saidaDoCliente = new ObjectOutputStream(socketParaServidor.getOutputStream());
-            
-            ObjectInputStream entradaDoCliente = new ObjectInputStream(socketParaServidor.getInputStream());
-            new Thread(new Recebedor(TELA_PRINCIPAL, entradaDoCliente)).start();
-            
+            conectaServidor();
         } catch (IOException ex) {
-            System.out.println("Erro no cliente " + ex.getMessage());
+            Logger.getLogger("Erro ao conectar ao servidor.", ex.toString());
         }
     }
     
-    public void enviarMensagem(String mensagem) throws IOException {
-        Mensagem mensagemToCliente = new Mensagem(NICKNAME, mensagem);
-        saidaDoCliente.writeObject(mensagemToCliente);
+    private void conectaServidor() throws IOException {
+        Socket socketToServidor = new Socket(SERVER_ADDRESS, PORTA);
+        
+        getStreamsFromSocket(socketToServidor);
+    }
+    
+    private void getStreamsFromSocket(Socket socket) throws IOException {
+        this.saidaDoCliente = new ObjectOutputStream(socket.getOutputStream());
+        
+        ObjectInputStream entradaDoCliente = new ObjectInputStream(socket.getInputStream());
+        iniciarRecebedor(entradaDoCliente);
+    }
+    
+    private void iniciarRecebedor(ObjectInputStream streamEntrada) {
+        Recebedor recebedor = new Recebedor(this.TELA_PRINCIPAL, streamEntrada);
+        new Thread(recebedor).start();
+    }
+    
+    public void enviarMensagem(Mensagem mensagem) throws IOException {
+        saidaDoCliente.writeObject(mensagem);
         saidaDoCliente.flush();
     }
 }
