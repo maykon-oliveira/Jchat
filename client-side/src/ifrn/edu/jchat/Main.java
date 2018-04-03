@@ -14,7 +14,7 @@ public class Main extends Application {
     
     @Override
     public void start(Stage stage) throws Exception {
-        Parent root = FXMLLoader.load(getClass().getResource("tela_principal.fxml"));
+        Parent root = FXMLLoader.load(getClass().getResource("tela_inicial.fxml"));
         
         Scene scene = new Scene(root);
         stage.setTitle("JChat");
