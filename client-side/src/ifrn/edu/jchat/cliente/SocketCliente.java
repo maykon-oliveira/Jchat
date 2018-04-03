@@ -12,15 +12,15 @@ import java.util.logging.Logger;
  *
  * @author Maykon Oliveira
  */
-public class Cliente implements Runnable {
+public class SocketCliente implements Runnable {
     private final Integer PORTA = 5000;
-    private final String SERVER_ADDRESS;
+    private final String SERVER_ADDRESS = "localhost";
     private final TelaPrincipalController TELA_PRINCIPAL;
+    private Socket socketToServidor;
     private ObjectOutputStream saidaDoCliente;
 
-    public Cliente(TelaPrincipalController TELA_PRINCIPAL, String SERVER_ADDRESS) {
+    public SocketCliente(TelaPrincipalController TELA_PRINCIPAL) {
         this.TELA_PRINCIPAL = TELA_PRINCIPAL;
-        this.SERVER_ADDRESS = SERVER_ADDRESS;
     }
     
     @Override
@@ -33,7 +33,7 @@ public class Cliente implements Runnable {
     }
     
     private void conectaServidor() throws IOException {
-        Socket socketToServidor = new Socket(SERVER_ADDRESS, PORTA);
+        this.socketToServidor = new Socket(SERVER_ADDRESS, PORTA);
         
         getStreamsFromSocket(socketToServidor);
     }
@@ -53,5 +53,9 @@ public class Cliente implements Runnable {
     public void enviarMensagem(Mensagem mensagem) throws IOException {
         saidaDoCliente.writeObject(mensagem);
         saidaDoCliente.flush();
+    }
+    
+    public void fecharConexao() throws IOException{
+        socketToServidor.close();
     }
 }
