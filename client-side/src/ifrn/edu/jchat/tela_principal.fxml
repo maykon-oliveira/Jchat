@@ -13,26 +13,26 @@
 <?import javafx.scene.text.Font?>
 <?import javafx.scene.text.Text?>
 
-<AnchorPane id="AnchorPane" prefHeight="387.0" prefWidth="228.0" style="-fx-background-image: url(../../imagens/fundo.jpg);" xmlns="http://javafx.com/javafx/8.0.141" xmlns:fx="http://javafx.com/fxml/1" fx:controller="ifrn.edu.jchat.TelaPrincipalController">
+<AnchorPane id="AnchorPane" prefHeight="474.0" prefWidth="346.0" style="-fx-background-image: url(../../imagens/fundo.jpg);" xmlns="http://javafx.com/javafx/8.0.151" xmlns:fx="http://javafx.com/fxml/1">
    <children>
-      <ImageView fitHeight="412.0" fitWidth="228.0" pickOnBounds="true" preserveRatio="true">
+      <ImageView fitHeight="474.0" fitWidth="346.0" pickOnBounds="true">
          <image>
             <Image url="@recursos/fundo.jpg" />
          </image>
       </ImageView>
-      <TextField fx:id="areaDeMensagem" editable="false" layoutX="49.0" layoutY="61.0" prefHeight="176.0" prefWidth="183.0" AnchorPane.bottomAnchor="50.0" AnchorPane.leftAnchor="10.0" AnchorPane.rightAnchor="10.0" AnchorPane.topAnchor="40.0" />
-      <JFXButton layoutX="164.0" layoutY="367.0" onAction="#handleEnviarMensagem" ripplerFill="BLACK" style="-fx-background-color: white;" text="Enviar" AnchorPane.bottomAnchor="10.0" AnchorPane.rightAnchor="10.0" />
-      <JFXTextField fx:id="fieldCaixaMensagem" focusColor="WHITE" layoutX="11.0" layoutY="369.0" prefHeight="25.0" prefWidth="147.0" promptText="Digite sua mensagem..." unFocusColor="WHITE" AnchorPane.bottomAnchor="12.0" AnchorPane.leftAnchor="11.0" />
+      <TextField fx:id="areaDeMensagem" editable="false" layoutX="49.0" layoutY="47.0" prefHeight="349.0" prefWidth="326.0" AnchorPane.bottomAnchor="78.0" AnchorPane.leftAnchor="10.0" AnchorPane.rightAnchor="10.0" AnchorPane.topAnchor="47.0" />
+      <JFXButton buttonType="RAISED" layoutX="164.0" layoutY="367.0" onAction="#handleEnviarMensagem" ripplerFill="BLACK" style="-fx-background-color: white; -fx-font-size: 17px;" text="Enviar" AnchorPane.bottomAnchor="10.0" AnchorPane.rightAnchor="10.0" />
+      <JFXTextField fx:id="fieldCaixaMensagem" focusColor="WHITE" labelFloat="true" layoutX="11.0" layoutY="383.0" prefHeight="25.0" prefWidth="245.0" promptText="Digite sua mensagem..." style="-fx-font-size: 17px; -fx-prompt-text-fill: white;" unFocusColor="WHITE" AnchorPane.bottomAnchor="13.0" AnchorPane.leftAnchor="10.0" />
       <JFXToolbar layoutX="14.0" layoutY="14.0" prefHeight="32.0" prefWidth="226.0" AnchorPane.leftAnchor="10.0" AnchorPane.rightAnchor="10.0" AnchorPane.topAnchor="5.0">
          <right>
-            <Button mnemonicParsing="false" onAction="#handleSair" BorderPane.alignment="CENTER">
+            <Button mnemonicParsing="false" onAction="#handleSair" style="-fx-background-color: white;" textAlignment="CENTER" BorderPane.alignment="CENTER">
                <graphic>
-                  <FontAwesomeIconView glyphName="CLOSE" />
+                  <FontAwesomeIconView glyphName="CLOSE" style="-fx-font-size: 17px;" />
                </graphic>
             </Button>
          </right>
          <center>
-            <Text fx:id="textNickname" fill="#fcfcfc" strokeType="OUTSIDE" strokeWidth="0.0" text="Text" wrappingWidth="181.515625" BorderPane.alignment="CENTER">
+            <Text fx:id="textNickname" fill="#fcfcfc" strokeType="OUTSIDE" strokeWidth="0.0" text="Text" wrappingWidth="210.515625" BorderPane.alignment="CENTER">
                <font>
                   <Font size="16.0" />
                </font>
