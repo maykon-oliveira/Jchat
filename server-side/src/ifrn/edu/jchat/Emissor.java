@@ -15,9 +15,9 @@ public class Emissor {
     private PrintStream saidaDeDados;
 
     public Emissor(PrintStream saidaDeDados) {
-        this.saidaDeDados = saidaDeDados;
+        saidaDeDados = this.saidaDeDados;
     }
-    
+
     public void enviarMsg(String msg) {
         this.saidaDeDados.println(msg);
     }

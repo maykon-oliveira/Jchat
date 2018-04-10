@@ -22,26 +22,9 @@ public class Servidor {
         // Abrindo a porta do servidor!
         ServerSocket servidor = new ServerSocket(PORTA);
         System.out.println("Porta: " + PORTA + " Aberta!");
-        
-        
-        
-        
-        
-        
-        
+        Registrador registrador = new Registrador(distribuidor, servidor);
+        Thread pilha = new Thread(registrador);
+        pilha.start();
 
-        /*
-        while(true){
-            //Aceitando o cliente
-            Socket cliente = servidor.accept();
-            System.out.println("Conexão estabelecida com : " + cliente.getInetAddress().getHostAddress());
-            ObjectInputStream entradaDeDados = new ObjectInputStream(cliente.getInputStream());
-            Usuario novoUsuario = (Usuario) entradaDeDados.readObject();
-            System.out.println(novoUsuario);
-            cliente.close();
-            entradaDeDados.close();
-            servidor.close();
-        }
-         */
     }
 }

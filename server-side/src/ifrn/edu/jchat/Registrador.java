@@ -36,6 +36,14 @@ public class Registrador implements Runnable {
                 Socket cliente = this.servidor.accept();
                 Scanner entradaDeDados = new Scanner(cliente.getInputStream());
                 PrintStream saidaDeDados = new PrintStream(cliente.getOutputStream());
+                //
+                Receptor receptor = new Receptor(entradaDeDados, this.distribuidor);
+                Thread pilha = new Thread(receptor);
+                pilha.start();
+                //
+                Emissor emissor = new Emissor(saidaDeDados);
+
+                this.distribuidor.addEmisor(emissor);
 
             } catch (IOException e) {
                 System.out.println("Erro!");
