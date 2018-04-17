@@ -1,11 +1,8 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
 package ifrn.edu.jchat;
 
-import java.util.Scanner;
+import ifrn.edu.jchat.models.Mensagem;
+import java.io.IOException;
+import java.io.ObjectInputStream;
 
 /**
  *
@@ -13,21 +10,24 @@ import java.util.Scanner;
  */
 public class Receptor implements Runnable {
     
-    private Scanner entrada;
-    private Distribuidor distribuidor;
+    private final ObjectInputStream ENTRADA_CLIENTE;
+    private final DistribuidorMensagem distribuidor;
     
-    public Receptor(Scanner entrada, Distribuidor distribuidor) {
-        entrada = this.entrada;
-        distribuidor = this.distribuidor;
+    public Receptor(ObjectInputStream ENTRADA_CLIENTE, DistribuidorMensagem distribuidor) {
+        this.ENTRADA_CLIENTE = ENTRADA_CLIENTE;
+        this.distribuidor = distribuidor;
         
     }
-    //public void aguardaMsgs(){}
-
     @Override
     public void run() {
-        while (this.entrada.hasNextLine()) {
-            String msg = this.entrada.nextLine();
-            this.distribuidor.DistribuirMsg(msg);
+        try {
+            while (true) {
+                Mensagem mensagemFromCliente = (Mensagem) ENTRADA_CLIENTE.readObject();
+                distribuidor.DistribuirMensagens(mensagemFromCliente);
+            }
+            
+        } catch (IOException | ClassNotFoundException e) {
+            System.out.println("Erro ao receber mensagem " + e);
         }
     }
 }

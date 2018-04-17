@@ -1,24 +1,22 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
 package ifrn.edu.jchat;
 
-import java.io.PrintStream;
+import ifrn.edu.jchat.models.Mensagem;
+import java.io.IOException;
+import java.io.ObjectOutputStream;
 
 /**
  *
  * @author 20171148060019
  */
 public class Emissor {
-    private PrintStream saidaDeDados;
+    private final ObjectOutputStream SAIDA_CLIENTE;
 
-    public Emissor(PrintStream saidaDeDados) {
-        saidaDeDados = this.saidaDeDados;
+    public Emissor(ObjectOutputStream SAIDA_CLIENTE) {
+        this.SAIDA_CLIENTE = SAIDA_CLIENTE;
     }
 
-    public void enviarMsg(String msg) {
-        this.saidaDeDados.println(msg);
+    public void enviarMensagem(Mensagem mensagem) throws IOException {
+        SAIDA_CLIENTE.writeObject(mensagem);
+        SAIDA_CLIENTE.flush();
     }
 }

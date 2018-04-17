@@ -1,15 +1,10 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
 package ifrn.edu.jchat;
 
 import java.io.IOException;
-import java.io.PrintStream;
+import java.io.ObjectInputStream;
+import java.io.ObjectOutputStream;
 import java.net.ServerSocket;
 import java.net.Socket;
-import java.util.Scanner;
 
 /**
  *
@@ -17,36 +12,33 @@ import java.util.Scanner;
  */
 public class Registrador implements Runnable {
 
-    private Distribuidor distribuidor;
-    private ServerSocket servidor;
+    private final DistribuidorMensagem distribuidor;
+    private final ServerSocket serverSocket;
 
-    public Registrador(Distribuidor distribuidor, ServerSocket servidor) {
+    public Registrador(DistribuidorMensagem distribuidor, ServerSocket serverSocket) {
         this.distribuidor = distribuidor;
-        this.servidor = servidor;
+        this.serverSocket = serverSocket;
 
-    }
-
-    public void aguardaUsuario() {
     }
 
     @Override
     public void run() {
         while (true) {
             try {
-                Socket cliente = this.servidor.accept();
-                Scanner entradaDeDados = new Scanner(cliente.getInputStream());
-                PrintStream saidaDeDados = new PrintStream(cliente.getOutputStream());
-                //
-                Receptor receptor = new Receptor(entradaDeDados, this.distribuidor);
+                Socket socketCliente = serverSocket.accept();
+                ObjectInputStream entradaCliente = new ObjectInputStream(socketCliente.getInputStream());
+                ObjectOutputStream saidaCliente = new ObjectOutputStream(socketCliente.getOutputStream());
+                
+                Receptor receptor = new Receptor(entradaCliente, distribuidor);
                 Thread pilha = new Thread(receptor);
                 pilha.start();
-                //
-                Emissor emissor = new Emissor(saidaDeDados);
+                
+                Emissor emissor = new Emissor(saidaCliente);
 
                 this.distribuidor.addEmisor(emissor);
 
             } catch (IOException e) {
-                System.out.println("Erro!");
+                System.out.println("Erro no registrador " + e);
             }
         }
 
