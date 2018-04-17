@@ -8,13 +8,17 @@ import java.io.File;
  */
 public class MensagemImagem extends Mensagem {
     private File conteudo;
-
-    public MensagemImagem(String remetente, File mensagem) {
+    
+    public MensagemImagem(String remetente, File conteudo) {
         super(remetente);
-        this.conteudo = conteudo;
+        this.conteudo = conteudo;                
+    }
+
+    @Override
+    public String toString() {
+        return getRemetente() + ": Imagem " + conteudo.getName();
     }
     
-
     public File getConteudo() {
         return conteudo;
     }

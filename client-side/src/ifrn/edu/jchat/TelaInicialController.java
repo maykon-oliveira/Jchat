@@ -16,6 +16,7 @@ import javafx.stage.Stage;
  * FXML Controller class
  *
  * @author CristianeSilva
+ * @author Maykon Oliveira
  */
 public class TelaInicialController implements Initializable {
 
@@ -25,11 +26,6 @@ public class TelaInicialController implements Initializable {
     private Emissor emissor;
     private Recebedor recebedor;
 
-    /**
-     * Initializes the controller class.
-     * @param url
-     * @param rb
-     */
     @Override
     public void initialize(URL url, ResourceBundle rb) {
         socketCliente = new SocketCliente();
@@ -39,8 +35,7 @@ public class TelaInicialController implements Initializable {
     private void hendleSalvarNickname(ActionEvent event) {
         if (isValidNickname()) {
             try {
-                closeStage();
-                openMainStage();
+                iniciarTelaPrincipal();
             } catch (IOException ex) {
                 System.out.println("Erro ao abrir a tela principal" + ex.toString());
             }
@@ -54,6 +49,11 @@ public class TelaInicialController implements Initializable {
         return fieldNickname.getText().matches(regex);
     }
     
+    private void iniciarTelaPrincipal() throws IOException {
+        closeStage();
+        openMainStage();
+    }
+    
     private void closeStage() {
         ((Stage) fieldNickname.getScene().getWindow()).close();
     }
@@ -62,8 +62,8 @@ public class TelaInicialController implements Initializable {
         FXMLLoader loader = new FXMLLoader();
         loader.setLocation(getClass().getResource("tela_principal.fxml"));
         
+        emissor = new Emissor(fieldNickname.getText(), socketCliente.getSaidaCliente());
         TelaPrincipalController tela = new TelaPrincipalController(emissor);
-        
         iniciarRecebedor(tela);
         
         loader.setController(tela);

@@ -21,8 +21,7 @@ public class SocketCliente {
         try {
             conectaServidor();
         } catch (IOException ex) {
-            System.out.println("Erro ao conectar servidor");
-            ex.printStackTrace();
+            System.out.println("Erro ao conectar servidor" + ex);
         }
         
     }

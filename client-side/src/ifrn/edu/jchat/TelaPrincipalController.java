@@ -1,5 +1,6 @@
 package ifrn.edu.jchat;
 
+import com.jfoenix.controls.JFXListView;
 import com.jfoenix.controls.JFXTextField;
 import ifrn.edu.jchat.cliente.Emissor;
 import java.io.File;
@@ -9,76 +10,127 @@ import java.util.ResourceBundle;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
-import javafx.scene.control.TextField;
-import javafx.scene.text.Text;
 import javafx.stage.FileChooser;
+import javafx.stage.FileChooser.ExtensionFilter;
 import javafx.stage.Stage;
 import ifrn.edu.jchat.models.Mensagem;
+import ifrn.edu.jchat.models.MensagemImagem;
+import ifrn.edu.jchat.models.MensagemTexto;
+import java.awt.image.BufferedImage;
+import javafx.collections.ObservableList;
+import javafx.embed.swing.SwingFXUtils;
+import javafx.scene.control.ContentDisplay;
+import javafx.scene.control.Label;
+import javafx.scene.image.Image;
+import javafx.scene.image.ImageView;
+import javax.imageio.ImageIO;
 
 /**
  *
  * @author Maykon Oliveira
  */
 public class TelaPrincipalController implements Initializable {
-
-    // Referências para o template
-    @FXML
-    private TextField areaDeMensagem;
-    @FXML
-    private JFXTextField fieldCaixaMensagem;
-    @FXML
-    private Text titleNickname;
-
+    
+    @FXML private JFXTextField fieldCaixaMensagem;
+    private ObservableList listMensagens;
+    @FXML private JFXListView mensagensContent;
+    
     private final Emissor emissor;
     private FileChooser fileChooser;
 
     public TelaPrincipalController(Emissor emissor) {
         this.emissor = emissor;
     }
-
+    
     @Override
     public void initialize(URL url, ResourceBundle rb) {
         configuraFileChoose();
+        
+        listMensagens = mensagensContent.getItems();
+        mensagensContent.depthProperty().set(1);
+        mensagensContent.setExpanded(true);
     }
-
+    
     private void configuraFileChoose() {
         fileChooser = new FileChooser();
         fileChooser.setTitle("Escolha uma imagem");
-        fileChooser.getExtensionFilters().addAll(
-                new FileChooser.ExtensionFilter("JPG", "*.jpg"),
-                new FileChooser.ExtensionFilter("JPEG", "*.jpeg"),
-                new FileChooser.ExtensionFilter("BMP", "*.bmp"),
-                new FileChooser.ExtensionFilter("PNG", "*.png"));
+        fileChooser.setSelectedExtensionFilter(
+                new ExtensionFilter("Escolha uma imagem", "*.jpg","*.jpeg","*.bmp", "*.png"));
     }
-
+    
     @FXML
     private void handleSendTextMessage(ActionEvent event) {
         try {
-            emissor.sendMessageText(fieldCaixaMensagem.getText());
+            emissor.sendTextMessage(fieldCaixaMensagem.getText());
+            fieldCaixaMensagem.clear();
         } catch (IOException ex) {
-            System.out.println("Erro ao enviar mensagem de texto" + ex.toString());
+            System.out.println("Erro ao enviar mensagem de texto" + ex);
         }
     }
-
+    
     @FXML
-    void handleSendImageMessage(ActionEvent event) {
+    private void handleSendImageMessage(ActionEvent event) {
         File selectedFile = fileChooser.showOpenDialog(null);
-
+        
         if (selectedFile != null) {
             try {
-                emissor.sendMessageImage(selectedFile);
+                emissor.sendImageMessage(selectedFile);
             } catch (IOException ex) {
-                System.out.println("Erro ao enviar imagem" + ex.toString());
+                System.out.println("Erro ao enviar imagem" + ex);
             }
         }
     }
 
+    public void escreverMensagem(Mensagem mensagem) {
+        if (mensagem instanceof MensagemTexto) {
+            escreverMensagemTextoTela((MensagemTexto) mensagem);
+            
+        } else if (mensagem instanceof MensagemImagem) {
+            try {
+                escreverMensagemImagemTela((MensagemImagem) mensagem);
+            } catch (IOException ex) {
+                System.out.println("Erro ao escrever mensagem " + ex);
+            }
+        }
+        
+    }
+    
+    private void escreverMensagemTextoTela(MensagemTexto mensagemTexto) {
+        Label label = new Label(mensagemTexto.toString());
+        
+        listMensagens.add(label);
+    }
+    
+    private void escreverMensagemImagemTela(MensagemImagem mensagem) throws IOException {
+        BufferedImage bufferedImage = ImageIO.read(mensagem.getConteudo());
+        
+        Image image = SwingFXUtils.toFXImage(bufferedImage, null);
+        
+        ImageView imageView = new ImageView(image);
+        imageView.preserveRatioProperty().setValue(Boolean.TRUE);
+        ajustarImagem(imageView);
+        
+        Label label = new Label(mensagem.getRemetente(), imageView);
+        label.contentDisplayProperty().setValue(ContentDisplay.BOTTOM);
+        
+        listMensagens.add(label);
+    }
+    
+    private void ajustarImagem(ImageView image) {
+        if (image.getImage().getWidth() > 270) {
+            image.setFitWidth(270);
+        }
+    }
+    
     @FXML
     private void handleSair(ActionEvent event) {
-        ((Stage) titleNickname.getScene().getWindow()).close();
-    }
-
-    public void escreverMensagemTela(Mensagem mensagem) {
-        // TODO
+        try {
+            emissor.fecharConexao();
+            
+        } catch (IOException ex) {
+            System.out.println("Erro ao fechar conexão");
+        } finally {
+            ((Stage) fieldCaixaMensagem.getScene().getWindow()).close();
+        }
     }
 }
