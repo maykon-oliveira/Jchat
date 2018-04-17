@@ -2,6 +2,8 @@ package ifrn.edu.jchat.cliente;
 
 import ifrn.edu.jchat.models.Mensagem;
 import ifrn.edu.jchat.TelaPrincipalController;
+import ifrn.edu.jchat.models.MensagemImagem;
+import ifrn.edu.jchat.models.MensagemTexto;
 import java.io.IOException;
 import java.io.ObjectInputStream;
 import java.util.logging.Logger;
@@ -22,9 +24,16 @@ public class Recebedor implements Runnable {
     @Override
     public void run() {
         try {
-            while (true) {                
-                Mensagem mensagemFromServidor = (Mensagem) ENTRADA_CLIENTE.readObject();
-                System.out.println(mensagemFromServidor);                
+            while (true) {
+                Object objectFromServidor = ENTRADA_CLIENTE.readObject();
+                Mensagem mensagemFromServidor;
+                
+                if (objectFromServidor instanceof MensagemTexto) {
+                    System.out.println("Recebeu texto");                
+                } else if (objectFromServidor instanceof MensagemImagem) {
+                    System.out.println("Recebeu imagem");
+                }
+                
       // TODO - TELA_PRINCIPAL.escreverMensagemTela(mensagemFromServidor);
             }
             
