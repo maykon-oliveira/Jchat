@@ -1,7 +1,10 @@
 package ifrn.edu.jchat;
 
 import com.jfoenix.controls.JFXListView;
+import com.jfoenix.controls.JFXPopup;
+import com.jfoenix.controls.JFXRippler;
 import com.jfoenix.controls.JFXTextField;
+import com.jfoenix.controls.JFXToolbar;
 import ifrn.edu.jchat.cliente.Emissor;
 import java.io.File;
 import java.io.IOException;
@@ -23,6 +26,11 @@ import javafx.scene.control.ContentDisplay;
 import javafx.scene.control.Label;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
+import javafx.scene.input.MouseEvent;
+import javafx.scene.layout.AnchorPane;
+import javafx.scene.layout.HBox;
+import javafx.scene.layout.StackPane;
+import javafx.scene.layout.VBox;
 import javax.imageio.ImageIO;
 
 /**
@@ -34,6 +42,11 @@ public class TelaPrincipalController implements Initializable {
     @FXML private JFXTextField fieldCaixaMensagem;
     private ObservableList listMensagens;
     @FXML private JFXListView mensagensContent;
+    @FXML private JFXToolbar toolBar;
+    @FXML private HBox toolBarRight;
+    @FXML private Label lblMenu;
+    @FXML private VBox overflowContainer;
+    @FXML private StackPane stackPane;
     
     private final Emissor emissor;
     private FileChooser fileChooser;
@@ -45,6 +58,7 @@ public class TelaPrincipalController implements Initializable {
     @Override
     public void initialize(URL url, ResourceBundle rb) {
         configuraFileChoose();
+        configurarMenu();
         
         listMensagens = mensagensContent.getItems();
         mensagensContent.depthProperty().set(1);
@@ -56,6 +70,18 @@ public class TelaPrincipalController implements Initializable {
         fileChooser.setTitle("Escolha uma imagem");
         fileChooser.setSelectedExtensionFilter(
                 new ExtensionFilter("Escolha uma imagem", "*.jpg","*.jpeg","*.bmp", "*.png"));
+    }
+    
+    private void configurarMenu() {
+        JFXRippler rippler = new JFXRippler(lblMenu);
+        rippler.setMaskType((JFXRippler.RipplerMask.RECT));
+        toolBarRight.getChildren().add(rippler);
+        
+        JFXPopup popup = new JFXPopup();
+        popup.setPopupContent(overflowContainer);
+        lblMenu.setOnMouseClicked((MouseEvent e) -> {
+            popup.show(rippler, JFXPopup.PopupVPosition.TOP, JFXPopup.PopupHPosition.RIGHT);
+        });
     }
     
     @FXML

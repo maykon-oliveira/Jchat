@@ -3,35 +3,87 @@
 <?import com.jfoenix.controls.JFXButton?>
 <?import com.jfoenix.controls.JFXListView?>
 <?import com.jfoenix.controls.JFXTextField?>
+<?import com.jfoenix.controls.JFXToolbar?>
 <?import de.jensd.fx.glyphs.fontawesome.FontAwesomeIconView?>
+<?import de.jensd.fx.glyphs.materialdesignicons.MaterialDesignIconView?>
+<?import javafx.geometry.Insets?>
 <?import javafx.scene.Cursor?>
 <?import javafx.scene.control.Button?>
+<?import javafx.scene.control.Label?>
 <?import javafx.scene.image.Image?>
 <?import javafx.scene.image.ImageView?>
 <?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.layout.BorderPane?>
+<?import javafx.scene.layout.HBox?>
+<?import javafx.scene.layout.StackPane?>
+<?import javafx.scene.layout.VBox?>
 
-<AnchorPane prefHeight="519.0" prefWidth="273.0" styleClass="root" stylesheets="@recursos/estilo.css" xmlns="http://javafx.com/javafx/8.0.141" xmlns:fx="http://javafx.com/fxml/1">
+<StackPane fx:id="stackPane" xmlns="http://javafx.com/javafx/8.0.141" xmlns:fx="http://javafx.com/fxml/1">
    <children>
-      <ImageView fitHeight="526.0" fitWidth="320.0" pickOnBounds="true" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
-         <image>
-            <Image url="@recursos/fundo.jpg" />
-         </image>
-      </ImageView>
-      <JFXButton buttonType="RAISED" layoutX="198.0" layoutY="13.0" onAction="#handleSendTextMessage" ripplerFill="BLACK" text="Enviar" AnchorPane.bottomAnchor="469.0" AnchorPane.topAnchor="20.0">
-         <cursor>
-            <Cursor fx:constant="HAND" />
-         </cursor></JFXButton>
-      <JFXTextField fx:id="fieldCaixaMensagem" focusColor="WHITE" labelFloat="true" layoutX="10.0" layoutY="14.0" prefHeight="38.0" prefWidth="180.0" promptText="Digite sua mensagem..." styleClass="text-field" unFocusColor="WHITE" AnchorPane.leftAnchor="10.0" AnchorPane.topAnchor="20.0" />
-      <Button layoutX="270.0" layoutY="11.0" mnemonicParsing="false" onAction="#handleSendImageMessage" prefHeight="38.0" prefWidth="38.0" textAlignment="CENTER" AnchorPane.leftAnchor="270.0" AnchorPane.rightAnchor="10.0" AnchorPane.topAnchor="20.0">
-         <graphic>
-            <FontAwesomeIconView glyphName="IMAGE" style="-fx-font-size: 17px;" />
-         </graphic>
-      </Button>
-      <JFXListView fx:id="mensagensContent" layoutY="115.0" prefHeight="394.0" prefWidth="300.0" AnchorPane.bottomAnchor="10.0" AnchorPane.leftAnchor="10.0" AnchorPane.rightAnchor="10.0" AnchorPane.topAnchor="115.0" />
-      <Button layoutX="273.0" layoutY="62.0" mnemonicParsing="false" onAction="#handleSair">
-         <graphic>
-            <FontAwesomeIconView glyphName="CLOSE" size="16" />
-         </graphic>
-      </Button>
+      <AnchorPane prefHeight="519.0" prefWidth="273.0" styleClass="root" stylesheets="@recursos/estilo.css">
+         <children>
+            <VBox fx:id="overflowContainer" alignment="CENTER" prefHeight="104.0" prefWidth="44.0" styleClass="card-white">
+               <children>
+                  <Button alignment="CENTER" layoutX="15.0" layoutY="50.0" mnemonicParsing="false" onAction="#handleSendImageMessage">
+                     <graphic>
+                        <FontAwesomeIconView glyphName="IMAGE" size="16" />
+                     </graphic>
+                  </Button>
+                  <Button alignment="CENTER" mnemonicParsing="false" onAction="#handleSair">
+                     <graphic>
+                        <FontAwesomeIconView glyphName="CLOSE" size="16" />
+                     </graphic>
+                     <VBox.margin>
+                        <Insets top="10.0" />
+                     </VBox.margin>
+                  </Button>
+               </children>
+            </VBox>
+            <ImageView fitHeight="526.0" fitWidth="320.0" pickOnBounds="true" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+               <image>
+                  <Image url="@recursos/fundo.jpg" />
+               </image>
+            </ImageView>
+            <JFXToolbar fx:id="toolBar" prefHeight="65.0" prefWidth="320.0" styleClass="toolbar" AnchorPane.bottomAnchor="461.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+               <right>
+                  <HBox fx:id="toolBarRight" alignment="CENTER" prefHeight="40.0" prefWidth="26.0" BorderPane.alignment="CENTER">
+                     <children>
+                        <Label fx:id="lblMenu" prefHeight="38.0" prefWidth="21.0">
+                           <graphic>
+                              <MaterialDesignIconView fill="WHITE" glyphName="DOTS_VERTICAL" size="22" wrappingWidth="29.0">
+                                 <cursor>
+                                    <Cursor fx:constant="HAND" />
+                                 </cursor></MaterialDesignIconView>
+                           </graphic>
+                        </Label>
+                     </children>
+                  </HBox>
+               </right>
+               <center>
+                  <HBox alignment="CENTER_RIGHT" BorderPane.alignment="CENTER">
+                     <children>
+                        <JFXTextField fx:id="fieldCaixaMensagem" focusColor="WHITE" labelFloat="true" prefHeight="38.0" prefWidth="200.0" promptText="Digite sua mensagem..." styleClass="text-field" unFocusColor="WHITE">
+                           <HBox.margin>
+                              <Insets right="5.0" />
+                           </HBox.margin>
+                        </JFXTextField>
+                        <JFXButton buttonType="RAISED" onAction="#handleSendTextMessage" ripplerFill="BLACK" text="Enviar">
+                           <cursor>
+                              <Cursor fx:constant="HAND" />
+                           </cursor>
+                           <HBox.margin>
+                              <Insets left="5.0" />
+                           </HBox.margin>
+                        </JFXButton>
+                     </children>
+                     <padding>
+                        <Insets bottom="5.0" left="5.0" right="5.0" top="5.0" />
+                     </padding>
+                  </HBox>
+               </center>
+            </JFXToolbar>
+            <JFXListView fx:id="mensagensContent" layoutY="115.0" prefHeight="394.0" prefWidth="300.0" AnchorPane.bottomAnchor="10.0" AnchorPane.leftAnchor="10.0" AnchorPane.rightAnchor="10.0" AnchorPane.topAnchor="115.0" />
+         </children>
+      </AnchorPane>
    </children>
-</AnchorPane>
+</StackPane>
