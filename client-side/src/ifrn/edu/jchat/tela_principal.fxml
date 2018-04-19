@@ -18,11 +18,11 @@
 <?import javafx.scene.layout.StackPane?>
 <?import javafx.scene.layout.VBox?>
 
-<StackPane fx:id="stackPane" xmlns="http://javafx.com/javafx/8.0.141" xmlns:fx="http://javafx.com/fxml/1">
+<StackPane fx:id="stackPane" prefHeight="567.0" prefWidth="345.0" xmlns="http://javafx.com/javafx/8.0.151" xmlns:fx="http://javafx.com/fxml/1">
    <children>
       <AnchorPane prefHeight="519.0" prefWidth="273.0" styleClass="root" stylesheets="@recursos/estilo.css">
          <children>
-            <VBox fx:id="overflowContainer" alignment="CENTER" prefHeight="104.0" prefWidth="44.0" styleClass="card-white">
+            <VBox fx:id="overflowContainer" alignment="CENTER" prefHeight="104.0" prefWidth="44.0">
                <children>
                   <Button alignment="CENTER" layoutX="15.0" layoutY="50.0" mnemonicParsing="false" onAction="#handleSendImageMessage">
                      <graphic>
@@ -39,12 +39,12 @@
                   </Button>
                </children>
             </VBox>
-            <ImageView fitHeight="526.0" fitWidth="320.0" pickOnBounds="true" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+            <ImageView fitHeight="567.0" fitWidth="345.0" pickOnBounds="true" AnchorPane.bottomAnchor="-41.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="-25.0" AnchorPane.topAnchor="0.0">
                <image>
-                  <Image url="@recursos/fundo.jpg" />
+                  <Image url="@recursos/fundo.png" />
                </image>
             </ImageView>
-            <JFXToolbar fx:id="toolBar" prefHeight="65.0" prefWidth="320.0" styleClass="toolbar" AnchorPane.bottomAnchor="461.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+            <JFXToolbar fx:id="toolBar" prefHeight="80.0" prefWidth="345.0" styleClass="toolbar" AnchorPane.bottomAnchor="487.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
                <right>
                   <HBox fx:id="toolBarRight" alignment="CENTER" prefHeight="40.0" prefWidth="26.0" BorderPane.alignment="CENTER">
                      <children>
@@ -62,7 +62,7 @@
                <center>
                   <HBox alignment="CENTER_RIGHT" BorderPane.alignment="CENTER">
                      <children>
-                        <JFXTextField fx:id="fieldCaixaMensagem" focusColor="WHITE" labelFloat="true" prefHeight="38.0" prefWidth="200.0" promptText="Digite sua mensagem..." styleClass="text-field" unFocusColor="WHITE">
+                        <JFXTextField fx:id="fieldCaixaMensagem" focusColor="WHITE" labelFloat="true" prefHeight="38.0" prefWidth="224.0" promptText="Digite sua mensagem" styleClass="text-field" unFocusColor="WHITE">
                            <HBox.margin>
                               <Insets right="5.0" />
                            </HBox.margin>
