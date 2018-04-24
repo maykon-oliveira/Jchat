@@ -1,3 +1,1 @@
-# Lado Cliente
-
-Todo o projeto do lado cliente
+# Todo o sistema do lado cliente
